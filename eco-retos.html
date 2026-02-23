@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Retos | Guardianes del Mar</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/eco-retos.css">
+</head>
+
+<body class="eco-body">
+
+    <!-- HEADER -->
+  <header>
+    <div class="header-fish left">🐟</div>
+    <div class="header-fish right">🐡</div>
+    <div class="header-inner">
+      <div class="titulo-emoji">🌊</div>
+      <h1>¡Amigos del Mar<br><span>en Peligro!</span></h1>
+      <p class="header-sub">Aprende sobre las especies marinas de Panamá y ayúdalas a sobrevivir 💪</p>
+    </div>
+  </header>
+
+    <main class="eco-container">
+
+        <!-- Header decorativo -->
+        <div class="eco-header">
+            <h1 class="eco-title">
+                <i class="fas fa-trophy"></i>
+                Eco-Trivia Marina
+                <i class="fas fa-trophy"></i>
+            </h1>
+            <p class="eco-subtitle">¡Demuestra tu conocimiento y conviértete en un Guardián del Mar!</p>
+        </div>
+
+        <!-- Selector de nivel -->
+        <div id="level-selection" class="level-selection">
+            <h2 class="selection-title">Selecciona tu nivel:</h2>
+            <div class="level-buttons">
+                <button onclick="startQuiz('facil')" class="btn-level facil">
+                    <i class="fas fa-seedling"></i>
+                    <span>Fácil</span>
+                    <small>10 preguntas básicas</small>
+                </button>
+                <button onclick="startQuiz('medio')" class="btn-level medio">
+                    <i class="fas fa-water"></i>
+                    <span>Medio</span>
+                    <small>Preguntas intermedias</small>
+                </button>
+                <button onclick="startQuiz('dificil')" class="btn-level dificil">
+                    <i class="fas fa-skull"></i>
+                    <span>Difícil</span>
+                    <small>Para expertos</small>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz activo -->
+        <div id="quiz-box" class="quiz-box hidden">
+            <div class="quiz-header">
+                <div class="quiz-stats">
+                    <span class="question-counter">
+                        <i class="fas fa-question-circle"></i>
+                        <span id="current-question">1</span>/<span id="total-questions">10</span>
+                    </span>
+                    <span class="score-display">
+                        <i class="fas fa-star"></i>
+                        Puntaje: <span id="current-score">0</span>
+                    </span>
+                </div>
+                <div class="timer-container">
+                    <div id="timer" class="timer">20</div>
+                    <div class="timer-label">segundos</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+
+            <div class="question-container">
+                <h2 id="question" class="question-text"></h2>
+            </div>
+
+            <div id="options" class="options-grid"></div>
+
+            <div id="feedback" class="feedback hidden">
+                <i class="fas fa-info-circle"></i>
+                <span id="feedback-message"></span>
+            </div>
+        </div>
+
+        <!-- Resultado final -->
+        <div id="result-box" class="result-box hidden">
+            <div class="result-header">
+                <i class="fas fa-flag-checkered result-icon"></i>
+                <h2>¡Eco-Reto Completado!</h2>
+            </div>
+            
+            <div class="result-stats">
+                <div class="stat-card">
+                    <span class="stat-label">Puntaje final</span>
+                    <span class="stat-value" id="final-score">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Respuestas correctas</span>
+                    <span class="stat-value" id="correct-answers">0/10</span>
+                </div>
+            </div>
+
+            <div id="badge-container" class="badge-container">
+                <!-- Generado por JS -->
+            </div>
+
+            <div class="result-actions">
+                <button onclick="location.reload()" class="btn-restart">
+                    <i class="fas fa-redo-alt"></i>
+                    Jugar de nuevo
+                </button>
+                <button onclick="window.location.href='especies.html'" class="btn-study">
+                    <i class="fas fa-book-open"></i>
+                    Estudiar especies
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/eco-retos.js"></script>
+</body>
+</html>

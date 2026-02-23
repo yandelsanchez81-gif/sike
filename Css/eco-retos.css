@@ -1,0 +1,749 @@
+/* ========================================
+   ECO-RETOS.CSS - ESTILOS MEJORADOS
+   Tema: Verde Pastel / Guardianes del Mar
+   ======================================== */
+
+/* ========================================
+   IMPORTAR FUENTES Y VARIABLES GLOBALES
+   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap');
+
+/* ========================================
+   VARIABLES - MISMA PALETA DE STYLE.CSS
+   ======================================== */
+:root {
+    --verde-oscuro: #2d6a4f;
+    --verde-medio: #52b788;
+    --verde-claro: #95d5b2;
+    --verde-pastel: #d8f3dc;
+    --verde-suave: #b7e4c7;
+    --acento-lima: #a9e34b;
+    --amarillo-pastel: #fef9c3;
+    --coral-suave: #ffd6d6;
+    --azul-suave: #cce5ff;
+    --blanco: #ffffff;
+    --texto-oscuro: #1b4332;
+    --sombra: rgba(45, 106, 79, 0.15);
+    
+    /* Mantener compatibilidad con nombres anteriores */
+    --ocean-principal: var(--verde-oscuro);
+    --ocean-accent: var(--verde-medio);
+    --ocean-hover: var(--verde-claro);
+    --ocean-deep: var(--verde-oscuro);
+    --ocean-mid: var(--verde-medio);
+    --light-bg: var(--verde-pastel);
+    --gray-light: var(--verde-suave);
+    --gray-dark: #52916a;
+    --white: var(--blanco);
+    --black: var(--texto-oscuro);
+    --shadow-md: 0 6px 20px var(--sombra);
+    --danger-red: #ff9aa2;
+    --safe-green: #b5ead7;
+    --warning-yellow: #ffec99;
+    
+    /* Niveles de dificultad */
+    --level-easy: var(--verde-medio);
+    --level-medium: #ffec99;
+    --level-hard: #ff9aa2;
+}
+
+/* ========================================
+   ESTRUCTURA PRINCIPAL
+   ======================================== */
+.eco-body {
+    background: linear-gradient(160deg, #c8f0d8 0%, #b2e4c2 50%, #9dd5b2 100%);
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    color: var(--texto-oscuro);
+}
+
+.eco-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   HEADER DE LA PÁGINA
+   ======================================== */
+.eco-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.eco-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.5rem;
+    color: var(--verde-oscuro);
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px var(--sombra);
+}
+
+.eco-title i {
+    color: var(--verde-medio);
+    font-size: 2rem;
+}
+
+.eco-subtitle {
+    color: #52916a;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* ========================================
+   SELECTOR DE NIVEL
+   ======================================== */
+.level-selection {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px var(--sombra);
+    border: 3px solid var(--verde-suave);
+}
+
+.selection-title {
+    text-align: center;
+    color: var(--verde-oscuro);
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 800;
+}
+
+.level-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.btn-level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border: 2.5px solid transparent;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: var(--texto-oscuro);
+    font-weight: 800;
+    gap: 0.5rem;
+    box-shadow: 0 4px 14px var(--sombra);
+}
+
+.btn-level i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn-level span {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.btn-level small {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+.btn-level.facil {
+    background: var(--verde-pastel);
+    color: var(--verde-oscuro);
+    border-color: var(--verde-suave);
+}
+
+.btn-level.medio {
+    background: var(--amarillo-pastel);
+    color: #a67c00;
+    border-color: #ffe082;
+}
+
+.btn-level.dificil {
+    background: var(--coral-suave);
+    color: #c0392b;
+    border-color: #ffb3b3;
+}
+
+.btn-level:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 16px 36px var(--sombra);
+}
+
+.btn-level.facil:hover {
+    background: var(--verde-medio);
+    color: var(--blanco);
+    border-color: var(--verde-medio);
+}
+
+.btn-level.medio:hover {
+    background: #ffe082;
+    color: #a67c00;
+}
+
+.btn-level.dificil:hover {
+    background: #ffb3b3;
+    color: #c0392b;
+}
+
+.btn-level:active {
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   CAJA DEL QUIZ
+   ======================================== */
+.quiz-box {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px var(--sombra);
+    border: 3px solid var(--verde-suave);
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.quiz-stats {
+    display: flex;
+    gap: 2rem;
+    background: var(--verde-pastel);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: 2px solid var(--verde-suave);
+}
+
+.question-counter, .score-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--verde-oscuro);
+    font-weight: 800;
+}
+
+.question-counter i, .score-display i {
+    color: var(--verde-medio);
+}
+
+/* ========================================
+   TEMPORIZADOR - CORREGIDO CON LA PALETA
+   ======================================== */
+.timer-container {
+    background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+    border-radius: 50px;
+    padding: 0.8rem 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 20px var(--sombra);
+    border: 2px solid rgba(255,255,255,0.3);
+    min-width: 130px;
+}
+
+.timer {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    min-width: 60px;
+    text-align: center;
+    background: rgba(0,0,0,0.15);
+    padding: 5px 10px;
+    border-radius: 40px;
+    line-height: 1;
+    letter-spacing: 1px;
+}
+
+.timer-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Cuando el tiempo está por agotarse */
+.timer.critical {
+    color: #fff0f0 !important;
+    background: rgba(231, 76, 60, 0.4);
+    animation: pulseTimer 0.8s infinite;
+}
+
+@keyframes pulseTimer {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); background: rgba(231, 76, 60, 0.6); }
+    100% { transform: scale(1); }
+}
+
+/* ========================================
+   BARRA DE PROGRESO
+   ======================================== */
+.progress-container {
+    background: var(--verde-pastel);
+    height: 12px;
+    border-radius: 50px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    border: 2px solid var(--verde-suave);
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--verde-medio), var(--verde-oscuro));
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 50px;
+}
+
+/* ========================================
+   PREGUNTA
+   ======================================== */
+.question-container {
+    margin-bottom: 2rem;
+    background: var(--verde-pastel);
+    padding: 1.5rem;
+    border-radius: 24px;
+    border: 2px solid var(--verde-suave);
+}
+
+.question-text {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.4rem;
+    color: var(--verde-oscuro);
+    font-weight: 800;
+    line-height: 1.5;
+    text-align: center;
+    margin: 0;
+}
+
+/* ========================================
+   OPCIONES (GRID DE RESPUESTAS)
+   ======================================== */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.option-btn {
+    background: white;
+    border: 2.5px solid var(--verde-suave);
+    border-radius: 18px;
+    padding: 1.2rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--texto-oscuro);
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 3px 10px var(--sombra);
+}
+
+.option-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--verde-medio);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.option-btn:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.02);
+    border-color: var(--verde-medio);
+    box-shadow: 0 8px 22px var(--sombra);
+    background: var(--verde-pastel);
+}
+
+.option-btn:hover:not(:disabled)::before {
+    opacity: 1;
+}
+
+.option-prefix {
+    background: var(--verde-pastel);
+    color: var(--verde-oscuro);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    border: 2px solid var(--verde-suave);
+}
+
+.option-text {
+    flex: 1;
+}
+
+/* Estados correcto/incorrecto */
+.option-btn.correct {
+    background: linear-gradient(135deg, #e8f5e9, #b5ead7);
+    border-color: #a5d6a7;
+    color: #2e7d32;
+    animation: pulse 0.5s;
+}
+
+.option-btn.correct .option-prefix {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-color: #a5d6a7;
+}
+
+.option-btn.incorrect {
+    background: linear-gradient(135deg, #ffe4e4, #ff9aa2);
+    border-color: #ffb3b3;
+    color: #c0392b;
+    animation: shake 0.5s;
+}
+
+.option-btn.incorrect .option-prefix {
+    background: #ffe4e4;
+    color: #c0392b;
+    border-color: #ffb3b3;
+}
+
+.option-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* ========================================
+   FEEDBACK
+   ======================================== */
+.feedback {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    animation: fadeIn 0.3s;
+    border: 2px solid;
+}
+
+.feedback.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-color: #a5d6a7;
+}
+
+.feedback.error {
+    background: #ffe4e4;
+    color: #c0392b;
+    border-color: #ffb3b3;
+}
+
+.feedback.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   RESULTADOS
+   ======================================== */
+.result-box {
+    background: var(--blanco);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px var(--sombra);
+    border: 3px solid var(--verde-suave);
+    animation: slideIn 0.5s ease-out;
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.result-icon {
+    font-size: 4rem;
+    color: var(--acento-lima);
+    margin-bottom: 1rem;
+}
+
+.result-header h2 {
+    font-family: 'Baloo 2', cursive;
+    color: var(--verde-oscuro);
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.result-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: var(--verde-pastel);
+    padding: 1.5rem;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid var(--verde-suave);
+}
+
+.stat-label {
+    display: block;
+    color: #52916a;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    display: block;
+    color: var(--verde-oscuro);
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+/* ========================================
+   INSIGNIAS (BADGES)
+   ======================================== */
+.badge-container {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    border-radius: 24px;
+    animation: popIn 0.6s;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.badge-container.junior {
+    background: linear-gradient(135deg, var(--verde-pastel), var(--verde-suave));
+    color: var(--verde-oscuro);
+}
+
+.badge-container.protector {
+    background: linear-gradient(135deg, var(--amarillo-pastel), #ffe082);
+    color: #a67c00;
+}
+
+.badge-container.maestro {
+    background: linear-gradient(135deg, #b5ff6e, #a9e34b);
+    color: #1b4332;
+}
+
+.badge-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.badge-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.badge-description {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 600;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ========================================
+   BOTONES DE ACCIÓN
+   ======================================== */
+.result-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.btn-restart, .btn-study {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    min-width: 200px;
+    border: 2.5px solid transparent;
+}
+
+.btn-restart {
+    background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+    color: white;
+    box-shadow: 0 6px 20px var(--sombra);
+}
+
+.btn-study {
+    background: var(--blanco);
+    color: var(--verde-oscuro);
+    border: 2.5px solid var(--verde-suave);
+    box-shadow: 0 4px 14px var(--sombra);
+}
+
+.btn-restart:hover, .btn-study:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 16px 36px var(--sombra);
+}
+
+.btn-restart:hover {
+    background: linear-gradient(135deg, #1b5e3b, var(--verde-medio));
+}
+
+.btn-study:hover {
+    background: var(--verde-pastel);
+    border-color: var(--verde-medio);
+}
+
+/* ========================================
+   UTILIDADES
+   ======================================== */
+.hidden {
+    display: none !important;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .eco-container {
+        padding: 0 1rem;
+    }
+
+    .eco-title {
+        font-size: 2rem;
+    }
+
+    .level-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .quiz-stats {
+        justify-content: center;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .question-text {
+        font-size: 1.2rem;
+    }
+
+    .result-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .result-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-restart, .btn-study {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .eco-title {
+        font-size: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .quiz-box, .level-selection, .result-box {
+        padding: 1rem;
+    }
+
+    .quiz-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .timer-container {
+        align-self: center;
+        padding: 0.6rem 1.2rem;
+    }
+    
+    .timer {
+        font-size: 1.8rem;
+        min-width: 50px;
+    }
+}

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌊 Amigos del Mar — Panamá</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <link rel="stylesheet" href="Css/style.css">
+  <style>
+    /* ===== LAYOUT MAPA + PANEL LATERAL ===== */
+    .mapa-layout {
+      display: grid;
+      grid-template-columns: 1fr 270px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* Mapa card sin margen inferior en el layout */
+    .mapa-layout .map-card { margin-bottom: 0; }
+
+    /* ===== PANEL FILTROS — estilo verde del proyecto ===== */
+    .filters-panel {
+      background: var(--blanco);
+      border-radius: 24px;
+      border: 3px solid var(--verde-suave);
+      box-shadow: 0 8px 30px var(--sombra);
+      overflow: hidden;
+      position: sticky;
+      top: 20px;
+    }
+
+    .filters-header {
+      background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+      padding: 16px 20px;
+    }
+    .filters-header h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--blanco);
+      margin: 0;
+      letter-spacing: 0.2px;
+    }
+
+    .filters-content {
+      padding: 16px 16px 20px;
+    }
+
+    .filter-group {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--verde-pastel);
+    }
+    .filter-group:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .filter-group h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--verde-oscuro);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .filter-options { display: flex; flex-direction: column; gap: 6px; }
+
+    /* Checkbox personalizado verde */
+    .filter-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      cursor: pointer;
+      user-select: none;
+      padding: 5px 7px;
+      border-radius: 10px;
+      transition: background .15s;
+    }
+    .filter-checkbox:hover { background: var(--verde-pastel); }
+    .filter-checkbox input { display: none; }
+
+    .checkbox-custom {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      border: 2.5px solid var(--verde-claro);
+      background: var(--verde-pastel);
+      flex-shrink: 0;
+      position: relative;
+      transition: all .2s;
+    }
+    .filter-checkbox input:checked + .checkbox-custom {
+      background: var(--verde-medio);
+      border-color: var(--verde-oscuro);
+    }
+    .filter-checkbox input:checked + .checkbox-custom::after {
+      content: '✓';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: white; font-weight: 900; font-size: 12px; line-height: 1;
+    }
+    .filter-checkbox:hover .checkbox-custom { border-color: var(--verde-medio); }
+
+    .checkbox-label {
+      font-size: 0.87rem;
+      font-weight: 700;
+      color: var(--texto-oscuro);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Botón restablecer */
+    .btn-reset-filters {
+      width: 100%;
+      margin-top: 14px;
+      padding: 10px;
+      background: var(--verde-pastel);
+      color: var(--verde-oscuro);
+      border: 2.5px solid var(--verde-suave);
+      border-radius: 50px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-reset-filters:hover {
+      background: var(--verde-medio);
+      color: white;
+      border-color: var(--verde-medio);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 14px rgba(45,106,79,0.25);
+    }
+
+    /* Contador */
+    .especies-counter {
+      text-align: center;
+      margin-top: 14px;
+      padding: 10px;
+      background: linear-gradient(135deg, var(--verde-pastel), #e0f5e9);
+      border-radius: 14px;
+      border: 2px solid var(--verde-suave);
+    }
+    .especies-counter p {
+      font-size: 0.72rem; font-weight: 800; color: #52916a;
+      text-transform: uppercase; letter-spacing: 0.5px; margin: 0;
+    }
+    .especies-counter span {
+      display: block;
+      font-family: 'Baloo 2', cursive;
+      font-size: 2.2rem; font-weight: 900;
+      color: var(--verde-oscuro); line-height: 1.1;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .mapa-layout { grid-template-columns: 1fr; }
+      .filters-panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BURBUJAS DECORATIVAS -->
+  <div class="burbuja b1">🐠</div>
+  <div class="burbuja b2">⭐</div>
+  <div class="burbuja b3">🐚</div>
+  <div class="burbuja b4">🌿</div>
+
+  <!-- ENCABEZADO -->
+  <header>
+    <div class="header-fish left">🐟</div>
+    <div class="header-fish right">🐡</div>
+    <div class="header-inner">
+      <div class="titulo-emoji">🌊</div>
+      <h1>¡Amigos del Mar<br><span>en Peligro!</span></h1>
+      <p class="header-sub">Aprende sobre las especies marinas de Panamá y ayúdalas a sobrevivir 💪</p>
+    </div>
+  </header>
+
+  <!-- NAVEGACIÓN -->
+  <nav class="nav-tabs">
+    <button class="nav-btn active" onclick="mostrarSeccion('mapa', this)">🗺️ Mapa</button>
+    <button class="nav-btn" onclick="mostrarSeccion('especies', this)">🐾 Especies</button>
+    <button class="nav-btn" onclick="mostrarSeccion('trivia', this)">🎮 Trivia</button>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+
+    <!-- ===================== SECCIÓN MAPA ===================== -->
+    <section id="sec-mapa" class="seccion activa">
+
+      <div class="mapa-layout">
+
+        <!-- MAPA -->
+        <div class="map-card">
+          <h2>🗺️ ¡Encuéntralos en el mapa!</h2>
+          <p class="card-sub">Haz clic en los puntos de colores para conocer cada animal 👇</p>
+          <div id="map"></div>
+          <div class="leyenda">
+            <div class="leyenda-item rojo-item">🔴 Peligro crítico</div>
+            <div class="leyenda-item amarillo-item">🟡 Vulnerable</div>
+            <div class="leyenda-item verde-item">🟢 Casi amenazada</div>
+          </div>
+        </div>
+
+        <!-- PANEL FILTROS -->
+        <aside class="filters-panel">
+          <div class="filters-header">
+            <h2>🎨 Filtros</h2>
+          </div>
+          <div class="filters-content">
+
+            <div class="filter-group">
+              <h3>🗺️ Región</h3>
+              <div class="filter-options">
+                <label class="filter-checkbox">
+                  <input type="checkbox" id="filter-pacifico" value="pacifico" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🌊 Océano Pacífico</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" id="filter-caribe" value="caribe" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🏝️ Mar Caribe</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <h3>🐾 Tipo de Animal</h3>
+              <div class="filter-options">
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="tipo-filter" value="tortuga" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🐢 Tortugas</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="tipo-filter" value="tiburon" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🦈 Tiburones</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="tipo-filter" value="mamifero" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🐋 Mamíferos</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="tipo-filter" value="coral" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🪸 Corales</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="tipo-filter" value="raya" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🐟 Rayas</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="tipo-filter" value="pez" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🐠 Peces</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <h3>⚠️ Nivel de Amenaza</h3>
+              <div class="filter-options">
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="peligro-filter" value="critico" checked>
+                  
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🔴 Peligro Crítico</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="peligro-filter" value="vulnerable" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🟡 Vulnerable</span>
+                </label>
+                <label class="filter-checkbox">
+                  <input type="checkbox" class="peligro-filter" value="menor" checked>
+                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-label">🟢 Casi Amenazada</span>
+                </label>
+              </div>
+            </div>
+
+            <button class="btn-reset-filters" id="reset-filters">🔄 Restablecer Filtros</button>
+
+            <div class="especies-counter">
+              <p>Mostrando</p>
+              <span id="especies-count">24</span>
+              <p>especies</p>
+            </div>
+
+          </div>
+        </aside>
+
+      </div><!-- /mapa-layout -->
+
+    </section>
+
+    <!-- ===================== SECCIÓN ESPECIES ===================== -->
+    <section id="sec-especies" class="seccion">
+
+      <div class="especies-header">
+        <h2>🐾 ¡Conoce a los Animales!</h2>
+        <p>Descubre todos los animales marinos que viven en Panamá</p>
+      </div>
+
+      <div class="especies-tabs">
+        <button class="etab active" onclick="filtrarEspecies('todos', this)">🌐 Todos</button>
+        <button class="etab" onclick="filtrarEspecies('tortuga', this)">🐢 Tortugas</button>
+        <button class="etab" onclick="filtrarEspecies('tiburon', this)">🦈 Tiburones</button>
+        <button class="etab" onclick="filtrarEspecies('mamifero', this)">🐋 Mamíferos</button>
+        <button class="etab" onclick="filtrarEspecies('coral', this)">🪸 Corales</button>
+        <button class="etab" onclick="filtrarEspecies('raya', this)">🐟 Rayas</button>
+        <button class="etab" onclick="filtrarEspecies('pez', this)">🐠 Peces</button>
+      </div>
+
+      <div class="especies-grid" id="especiesGrid"></div>
+
+    </section>
+
+    <!-- ===================== SECCIÓN TRIVIA ===================== -->
+    <section id="sec-trivia" class="seccion">
+      <div class="trivia-card">
+        <div class="trivia-emoji">🎮</div>
+        <h2>¡Hora de la Trivia!</h2>
+        <p>Pon a prueba todo lo que aprendiste sobre los animales marinos de Panamá</p>
+        <button class="nav-btn" id="btn-eco-retos">🏆 ¡Empezar la Trivia! 🚀</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>🌊 Juntos protegemos el mar de Panamá 🇵🇦 🐠</p>
+  </footer>
+
+ <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="js/especies-data.js"></script>
+<script>
+    // ===== MAPEO COLORES Y EMOJIS =====
+    const COLORES = { 'critico':'#E63946', 'peligro':'#E63946', 'vulnerable':'#F9C74F', 'menor':'#52B788' };
+    const EMOJIS  = { tortuga:'🐢', tiburon:'🦈', mamifero:'🐋', coral:'🪸', raya:'🐟', pez:'🐠' };
+    const ESTADOS = { 'critico':'🔴 Peligro Crítico', 'peligro':'🔴 En Peligro', 'vulnerable':'🟡 Vulnerable', 'menor':'🟢 Preocupación Menor' };
+
+    // ===== MAPA =====
+const map = L.map('map', {
+  center: [8.5, -80.5], 
+  zoom: 7,  // ← Cambiado de 8 a 7
+  minZoom: 6, // ← Bajamos el minZoom también
+  maxZoom: 15,
+  maxBounds: [[6.8,-83.2],[9.8,-77.2]], 
+  maxBoundsViscosity: 1.0
+});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors', opacity: 0.9
+    }).addTo(map);
+
+    function crearIcono(nivel) {
+      const c = COLORES[nivel] || '#52B788';
+      return L.divIcon({
+        html: `<div style="width:24px;height:24px;border-radius:50%;background:${c};border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>`,
+        className: '', iconSize:[24,24], iconAnchor:[12,12], popupAnchor:[0,-14]
+      });
+    }
+
+    function crearPopup(e) {
+      const emoji = EMOJIS[e.tipo] || '🐠';
+      const estado = ESTADOS[e.nivelPeligro] || '';
+      const c = COLORES[e.nivelPeligro] || '#52B788';
+      return `
+        <div style="width:230px;font-family:'Nunito',sans-serif;overflow:hidden;">
+          <img src="assets/images/especies/${e.fotoUrl}" alt="${e.nombreComun}"
+            style="width:100%;height:130px;object-fit:cover;display:block;border-radius:10px 10px 0 0;"
+            onerror="this.style.display='none'">
+          <div style="padding:10px 12px 12px;">
+            <span style="display:inline-block;background:${c};color:white;font-size:.72rem;font-weight:800;padding:2px 10px;border-radius:50px;margin-bottom:5px;">${estado}</span>
+            <div style="font-size:.98rem;font-weight:800;color:#1b4332;margin-bottom:2px;">${emoji} ${e.nombreComun}</div>
+            <div style="font-size:.77rem;color:#555;font-style:italic;margin-bottom:9px;">${e.nombreCientifico}</div>
+            <a href="especies.html?id=${e.id}" style="display:block;text-align:center;background:linear-gradient(135deg,#1b5e3b,#52b788);color:white;text-decoration:none;font-size:.83rem;font-weight:800;padding:7px 12px;border-radius:50px;font-family:'Nunito',sans-serif;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+              Ver más información →
+            </a>
+          </div>
+        </div>`;
+    }
+
+    let marcadores = [];
+    function cargarMarcadores() {
+      marcadores.forEach(m => map.removeLayer(m));
+      marcadores = [];
+      especiesData.forEach(e => {
+        const m = L.marker(e.coordenadas, { icon: crearIcono(e.nivelPeligro) });
+        m.especieData = e;
+        m.bindPopup(crearPopup(e), { maxWidth:230, autoPan:true, autoPanPadding:[50,50], keepInView:true });
+        m.on('popupopen', ev => {
+          const z = map.getZoom();
+          map.setView(ev.target.getLatLng(), z < 10 ? 10 : z, { animate:true, duration:.5 });
+        });
+        m.addTo(map);
+        marcadores.push(m);
+      });
+      aplicarFiltros();
+    }
+
+    function aplicarFiltros() {
+  const tipos    = Array.from(document.querySelectorAll('.tipo-filter:checked')).map(cb => cb.value);
+  const peligrosSeleccionados = Array.from(document.querySelectorAll('.peligro-filter:checked')).map(cb => cb.value);
+  const pac = document.getElementById('filter-pacifico').checked;
+  const car = document.getElementById('filter-caribe').checked;
+  let v = 0;
+  
+  console.log('Filtros aplicados - Peligros seleccionados:', peligrosSeleccionados);
+  
+  marcadores.forEach(m => {
+    const e = m.especieData;
+    
+    // Verificar región
+    const cumpleRegion = (e.region === 'pacifico' && pac) || (e.region === 'caribe' && car);
+    
+    // Verificar tipo
+    const cumpleTipo = tipos.includes(e.tipo);
+    
+    // ===== LÓGICA CORREGIDA PARA PELIGRO =====
+    let cumplePeligro = false;
+    
+    peligrosSeleccionados.forEach(peligro => {
+      if (peligro === 'critico') {
+        // Si seleccionaron 'critico', mostrar 'critico' Y 'peligro'
+        if (e.nivelPeligro === 'critico' || e.nivelPeligro === 'peligro') {
+          cumplePeligro = true;
+        }
+      } else if (peligro === 'vulnerable') {
+        if (e.nivelPeligro === 'vulnerable') {
+          cumplePeligro = true;
+        }
+      } else if (peligro === 'menor') {
+        if (e.nivelPeligro === 'menor') {
+          cumplePeligro = true;
+        }
+      }
+    });
+    // ==========================================
+    
+    const ok = cumpleRegion && cumpleTipo && cumplePeligro;
+    
+    if (ok) { 
+      if (!map.hasLayer(m)) m.addTo(map); 
+      v++; 
+    } else { 
+      if (map.hasLayer(m)) map.removeLayer(m); 
+    }
+  });
+  
+  document.getElementById('especies-count').textContent = v;
+  console.log('Especies visibles:', v);
+}
+
+    window.addEventListener('load', () => {
+      cargarMarcadores();
+      document.querySelectorAll('.tipo-filter,.peligro-filter,#filter-pacifico,#filter-caribe')
+        .forEach(cb => cb.addEventListener('change', aplicarFiltros));
+      document.getElementById('reset-filters').addEventListener('click', () => {
+        document.querySelectorAll('.tipo-filter,.peligro-filter,#filter-pacifico,#filter-caribe')
+          .forEach(cb => cb.checked = true);
+        aplicarFiltros();
+      });
+
+      // ===== REDIRECCIÓN A ECO-RETOS =====
+      const btnEcoRetos = document.getElementById('btn-eco-retos');
+      if (btnEcoRetos) {
+          btnEcoRetos.addEventListener('click', function() {
+              window.location.href = 'eco-retos.html';
+          });
+      }
+    });
+
+    // ===== NAVEGACIÓN PESTAÑAS =====
+    function mostrarSeccion(id, btn) {
+      document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('sec-' + id).classList.add('activa');
+      btn.classList.add('active');
+      if (id === 'mapa') setTimeout(() => map.invalidateSize(), 50);
+    }
+
+    // ===== TARJETAS ESPECIES =====
+    const emojisGrupo = { tortuga:'🐢', tiburon:'🦈', mamifero:'🐋', coral:'🪸', raya:'🐟', pez:'🐠' };
+    const coloresEstado = {
+      'critico':        { bg:'#fff0f0', borde:'#ffb3b3', badge:'#ffe4e4', texto:'#c0392b' },
+      'vulnerable':     { bg:'#fffde7', borde:'#ffe082', badge:'#fff8d6', texto:'#a67c00' },
+      'menor': { bg:'#f0faf4', borde:'#a5d6a7', badge:'#e8f5e9', texto:'#2e7d32' },
+      'peligro': { bg:'#fff0f0', borde:'#ffb3b3', badge:'#ffe4e4', texto:'#c0392b' }
+    };
+
+    function renderEspecies(filtro) {
+  const grid = document.getElementById('especiesGrid');
+  const lista = typeof especiesData !== 'undefined' ? especiesData : [];
+  const filtradas = filtro === 'todos' ? lista : lista.filter(e => e.tipo === filtro);
+  
+  // ===== DICCIONARIO DE IMÁGENES (el mismo que en especies.js) =====
+  const imagenesPorEspecie = {
+    // Tiburones
+    'tiburon-martillo.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/224059254/medium.jpg',
+    'tiburon-ballena.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/151593991/medium.jpg',
+    'tiburon-sedoso.jpg': 'https://imagenes.teleamazonas.com/files/og_thumbnail/uploads/2025/05/17/6828a5248000f.webp',
+    'tiburon-arrecifal.jpg': 'https://upload.wikimedia.org/wikipedia/commons/5/59/Caribbean_reef_shark.jpg',
+    
+    // Tortugas
+    'tortuga-verde.jpg': 'https://www.monaconatureencyclopedia.com/wp-content/uploads/2008/08/6-Chelonia-mydas-%C2%A9-Jean-Marie-GRADOT.jpg',
+    'tortuga-lora.jpg': 'https://www.tortugueroinfo.com/tortugas-marinas-costa-rica/olive-ridley-turtle.jpg',
+    'tortuga-carey.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/9696845/large.jpg',
+    'tortuga-baula.jpg': 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Leatherback_sea_turtle_Tinglar%2C_USVI_%285839996547%29.jpg',
+    
+    // Mamíferos marinos
+    'ballena-jorobada.jpg': 'https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=900',
+    'ballena-bryde.jpg': 'https://us.whales.org/wp-content/uploads/sites/2/2018/07/brydes-whale-jirayu-tour-ekkul-sg.jpg',
+    'cachalote.jpg': 'https://assets.superhivemarket.com/store/productimage/58646/image/original-14d6acfe55912eff3fc6789a14b64969.jpg',
+    'delfin-manchado.jpg': 'https://www.car-spaw-rac.org/IMG/jpg/pivard_tachetepantropical.jpg',
+    'delfin-costero.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/263699847/large.jpg',
+    'manati.jpg': 'https://eldia.com.do/wp-content/uploads/2017/09/27V-06_1p01.webp',
+    
+    // Rayas y mantas
+    'manta-gigante.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/61105151/original.jpg',
+    'raya-aguila.jpg': 'https://www.aquaportail.com/aquabdd/photos/aetobatus-narinari.webp',
+    
+    // Peces
+    'pez-sierra.jpg': 'https://recorrido.aquariumpuertodeveracruz.mx/wp-content/uploads/2024/10/pez-sierra.jpg',
+    'pez-sierra-caribe.jpg': 'https://www.sharksandrays.com/wp-content/uploads/2021/04/Smalltooth-Sawfish-002.jpg',
+    'mero-pacifico.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/98710674/large.jpg',
+    'mero-guasa.jpg': 'https://biogeodb.stri.si.edu/caribbean/resources/img/images/species/4760_8706.jpg',
+    'cambute.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/222365663/large.jpg',
+    
+    // Corales
+    'coral-cuerno-alce.jpg': 'https://www.fishipedia.es/wp-content/uploads/2022/06/Acropora-palmata-scaled.jpg',
+    'coral-cuerno-ciervo.jpg': 'https://inaturalist-open-data.s3.amazonaws.com/photos/143908891/large.jpg',
+    'coral-montana.jpg': 'https://s3.animalia.bio/animals/photos/full/original/2560pxorbicella-faveolata-colombia-2.webp',
+    'coral-siderastrea.jpg': 'https://reefbuilders.com/wp-content/uploads/rd/2017/07/Siderastrea-siderea-10.jpg'
+  };
+  
+  grid.innerHTML = filtradas.map(e => {
+    const c = coloresEstado[e.nivelPeligro] || coloresEstado['menor'];
+    const emoji = emojisGrupo[e.tipo] || '🐠';
+    const texto = ESTADOS[e.nivelPeligro] || '';
+    
+    // Obtener URL de la imagen
+    const imagenUrl = imagenesPorEspecie[e.fotoUrl] || `https://placehold.co/300x200/0369a1/FFFFFF?text=${encodeURIComponent(e.nombreComun)}`;
+    
+    return `
+      <div class="especie-card" style="background:${c.bg}; border-color:${c.borde};">
+        <div class="especie-img-wrap" style="height: 160px; overflow: hidden; position: relative;">
+          <img 
+            src="${imagenUrl}" 
+            alt="${e.nombreComun}"
+            style="width: 100%; height: 100%; object-fit: cover; display: block;"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="especie-img-fallback" style="display:none; width:100%; height:100%; align-items:center; justify-content:center; font-size:3rem; background:${c.bg};">${emoji}</div>
+        </div>
+        <div class="especie-info" style="padding: 12px;">
+          <div class="especie-badge" style="background:${c.badge}; color:${c.texto};">${texto}</div>
+          <h3 class="especie-nombre" style="margin: 8px 0 4px; font-size:1.1rem;">${emoji} ${e.nombreComun}</h3>
+          <p class="especie-cientifico" style="font-size:0.8rem; color:#555;"><em>${e.nombreCientifico}</em></p>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+    function filtrarEspecies(filtro, btn) {
+      document.querySelectorAll('.etab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderEspecies(filtro);
+    }
+
+    window.addEventListener('load', () => renderEspecies('todos'));
+</script>
+
+</body>
+</html>

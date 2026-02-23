@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especies | Guardianes del Mar</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="Css/">
+    <link rel="stylesheet" href="Css/especies.css">
+</head>
+<body>
+    
+    <!-- HEADER -->
+  <header>
+    <div class="header-fish left">🐟</div>
+    <div class="header-fish right">🐡</div>
+    <div class="header-inner">
+      <div class="titulo-emoji">🌊</div>
+      <h1>¡Amigos del Mar<br><span>en Peligro!</span></h1>
+      <p class="header-sub">Aprende sobre las especies marinas de Panamá y ayúdalas a sobrevivir 💪</p>
+    </div>
+  </header>
+
+  
+
+    <!-- BARRA DE FILTROS -->
+    <div class="filters-bar">
+        <div class="filters-container">
+            
+            <div class="filter-title">
+                <i class="fas fa-filter"></i>
+                <span>Filtrar especies:</span>
+            </div>
+
+            <!-- Región -->
+            <div class="filter-dropdown">
+                <label for="filter-region">Región:</label>
+                <select id="filter-region" class="filter-select">
+                    <option value="todas">Todas las regiones</option>
+                    <option value="pacifico">🌊 Océano Pacífico</option>
+                    <option value="caribe">🏝️ Mar Caribe</option>
+                </select>
+            </div>
+
+            <!-- Tipo -->
+            <div class="filter-dropdown">
+                <label for="filter-tipo">Tipo:</label>
+                <select id="filter-tipo" class="filter-select">
+                    <option value="todas">Todos los tipos</option>
+                    <option value="tortuga">🐢 Tortugas</option>
+                    <option value="tiburon">🦈 Tiburones</option>
+                    <option value="mamifero">🐋 Mamíferos</option>
+                    <option value="coral">🪸 Corales</option>
+                    <option value="raya">🐟 Rayas</option>
+                    <option value="pez">🐠 Peces</option>
+                </select>
+            </div>
+
+            <!-- Amenaza -->
+            <div class="filter-dropdown">
+                <label for="filter-amenaza">Amenaza:</label>
+                <select id="filter-amenaza" class="filter-select">
+                    <option value="todas">Todos los niveles</option>
+                    <option value="critico">🔴 Peligro Crítico / En Peligro</option>
+                    <option value="vulnerable">🟡 Vulnerable</option>
+                    <option value="menor">🟢 Preocupación Menor</option>
+                </select>
+            </div>
+
+            <!-- Botón limpiar -->
+            <button id="btn-limpiar-filtros" class="btn-limpiar">
+                <i class="fas fa-redo"></i> Limpiar
+            </button>
+
+            <!-- Contador -->
+            <div class="especies-count-display">
+                Mostrando: <strong id="count-especies">25</strong> especies
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CONTENEDOR DE ESPECIES -->
+    <main class="especies-main">
+        <div class="especies-grid" id="especies-container">
+            <!-- Generado por JS -->
+        </div>
+    </main>
+
+    <!-- Botón volver arriba -->
+    <button id="btn-scroll-top" class="btn-scroll-top" title="Volver arriba">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- SCRIPTS -->
+    <script src="js/especies-data.js"></script>
+    <script src="js/especies.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,574 @@
+/* ========================================
+   ESPECIES.CSS - GALERÍA REDISEÑADA
+   Más centrada, compacta y con identidad propia
+   ======================================== */
+
+/* ========================================
+   BARRA DE FILTROS - REDISEÑADA MODERNA
+   ======================================== */
+.filters-bar {
+    background: white;
+    border-bottom: 2px solid #06b6d4;
+    padding: 1.25rem 2rem;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(3, 105, 161, 0.1);
+}
+
+.filters-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.filter-title {
+    font-weight: 600;
+    color: #0369a1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    background: #f0f9ff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border-left: 3px solid #06b6d4;
+}
+
+.filter-title i {
+    color: #06b6d4;
+    font-size: 1rem;
+}
+
+/* Dropdowns - Limpios y modernos */
+.filter-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f8fafc;
+    padding: 0.4rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.filter-dropdown:hover {
+    border-color: #06b6d4;
+    box-shadow: 0 2px 6px rgba(6, 182, 212, 0.1);
+}
+
+.filter-dropdown label {
+    font-weight: 600;
+    color: #0369a1;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-select {
+    padding: 0.5rem 2.2rem 0.5rem 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0f172a;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+}
+
+.filter-select:hover {
+    background-color: #f8fafc;
+}
+
+.filter-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.3);
+}
+
+/* Botón limpiar - Moderno */
+.btn-limpiar {
+    padding: 0.65rem 1.3rem;
+    background: #06b6d4;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-limpiar:hover {
+    background: #0284c7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+/* Contador */
+.especies-count-display {
+    font-size: 0.9rem;
+    color: #475569;
+    font-weight: 500;
+    background: #f0f9ff;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #06b6d4;
+}
+
+.especies-count-display strong {
+    color: #0369a1;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-left: 0.3rem;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL - MÁS CENTRADO Y COMPACTO
+   ======================================== */
+.especies-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    background: #f8fafc;
+    min-height: calc(100vh - 180px);
+}
+
+.especies-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* ========================================
+   TARJETA DE ESPECIE - MÁS COMPACTA
+   ======================================== */
+.especie-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(3, 105, 161, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.especie-card:hover {
+    box-shadow: 0 8px 24px rgba(3, 105, 161, 0.15);
+    transform: translateY(-4px);
+    border-color: #06b6d4;
+}
+
+.especie-image {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+.especie-content {
+    padding: 2rem;
+}
+
+.especie-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f0f9ff;
+    padding-bottom: 1rem;
+}
+
+.especie-nombre {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.especie-icono {
+    font-size: 2rem;
+}
+
+.especie-cientifico {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+}
+
+.especie-badges {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.badge-peligro {
+    background-color: #dc2626;
+    color: white;
+}
+
+.badge-vulnerable {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.badge-casi-amenazada {
+    background-color: #10b981;
+    color: white;
+}
+
+.badge-region {
+    background-color: #06b6d4;
+    color: white;
+}
+
+.especie-section {
+    margin-bottom: 1.5rem;
+}
+
+.especie-section:last-child {
+    margin-bottom: 0;
+}
+
+.descripcion-principal {
+    background-color: #f0f9ff;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border-left: 4px solid #06b6d4;
+}
+
+.descripcion-principal .section-title {
+    margin-bottom: 1rem;
+}
+
+.descripcion-texto {
+    line-height: 1.8 !important;
+    font-size: 1rem !important;
+    text-align: justify;
+    color: #1e293b;
+}
+
+/* TÍTULOS DE SECCIONES - NUEVA IDENTIDAD */
+.section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0369a1;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.section-title i {
+    color: #06b6d4;
+    font-size: 1.1rem;
+}
+
+.section-content {
+    color: #1e293b;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.amenazas-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.amenazas-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #1e293b;
+}
+
+.amenazas-list li::before {
+    content: "⚠️";
+    position: absolute;
+    left: 0;
+    font-size: 1rem;
+}
+
+.dato-curioso-box {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border-left: 4px solid #06b6d4;
+    margin-top: 1rem;
+}
+
+.dato-curioso-box p {
+    margin: 0;
+    color: #0369a1;
+    font-weight: 500;
+}
+
+.foto-source {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: #64748b;
+    font-style: italic;
+    text-align: right;
+}
+
+/* ========================================
+   BOTÓN VOLVER ARRIBA
+   ======================================== */
+.btn-scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #06b6d4;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.btn-scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.btn-scroll-top:hover {
+    background-color: #0284c7;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.4);
+}
+
+/* ========================================
+   ESTADO OCULTO
+   ======================================== */
+.especie-card.hidden {
+    display: none;
+}
+
+/* ========================================
+   ANIMACIÓN DE ENTRADA
+   ======================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.especie-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* ========================================
+   FUENTES DE INFORMACIÓN
+   ======================================== */
+.fuentes-section {
+    background-color: #f0f9ff;
+    border-left: 4px solid #06b6d4;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.fuentes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.fuente-info {
+    font-size: 0.95rem;
+    background-color: #e0f2fe;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 0;
+    color: #0f172a;
+}
+
+.fuente-detalle {
+    font-size: 0.9rem;
+    color: #475569;
+    font-style: italic;
+    background-color: white;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px dashed #06b6d4;
+    margin: 0;
+}
+
+.fuente-url {
+    font-size: 0.9rem;
+    margin: 5px 0 0 0;
+}
+
+.fuente-url a {
+    color: #0369a1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.fuente-url a:hover {
+    color: #06b6d4;
+    text-decoration: underline;
+}
+
+.foto-source-section {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.foto-source {
+    font-size: 0.8rem;
+    color: #64748b;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+    .filters-bar {
+        padding: 1rem;
+    }
+    
+    .filters-container {
+        gap: 1rem;
+    }
+    
+    .filter-title {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .filter-dropdown {
+        flex: 1 1 auto;
+        min-width: 45%;
+    }
+    
+    .btn-limpiar {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+    
+    .especies-count-display {
+        width: 100%;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
+    .especies-main {
+        max-width: 100%;
+        padding: 1.5rem 1rem;
+    }
+    
+    .especie-image {
+        height: 250px;
+    }
+    
+    .especie-content {
+        padding: 1.5rem;
+    }
+    
+    .especie-nombre {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .especie-nombre {
+        font-size: 1.3rem;
+    }
+    
+    .especie-cientifico {
+        font-size: 1rem;
+    }
+    
+    .filter-dropdown {
+        min-width: 100%;
+    }
+    
+    .especies-main {
+        padding: 1rem;
+    }
+}
+
+/* Estilos para las imágenes */
+.especie-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    background-color: #f0f9ff;
+}
+
+.especie-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.especie-card:hover .especie-image {
+    transform: scale(1.05);
+}
+
+.badge-region-float {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #0369a1;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid #06b6d4;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+}
